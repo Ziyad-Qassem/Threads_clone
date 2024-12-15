@@ -12,6 +12,7 @@ struct SignUpView: View {
     @State private var password: String = ""
     @State private var fullName: String = ""
     @State private var email: String = ""
+    @Environment(\.dismiss) var  dismiss
     var body: some View {
         NavigationStack{
             VStack{
@@ -20,6 +21,8 @@ struct SignUpView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 150 , height: 150)
+                    .padding(.bottom)
+        
                 VStack{
                     TextField("Enter your email", text: $email)
                         .modifier(TextFieldModifiers())
@@ -48,7 +51,7 @@ struct SignUpView: View {
                 Divider()
                 
                 Button {
-                    
+                    dismiss()
                 }  label: {
                     HStack(spacing: 3){
                         Text("Already have an acount?")

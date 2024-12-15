@@ -19,6 +19,8 @@ struct LoginVIew: View {
                             .scaledToFit()
                             .frame(width: 150, height: 150)
                             .padding()
+                            .padding(.bottom)
+                    
                         VStack{
                             TextField("Enter your email", text: $email)
                                 .modifier(TextFieldModifiers())
@@ -50,7 +52,8 @@ struct LoginVIew: View {
                         Spacer()
                         Divider()
                         NavigationLink {
-                            Text("Sign Up")
+                            SignUpView()
+                                .navigationBarBackButtonHidden()
                         } label: {
                             HStack(spacing: 3){
                                 Text("Don't have an account?")
