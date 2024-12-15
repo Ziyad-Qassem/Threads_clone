@@ -14,7 +14,7 @@ struct CircularUserImage: View {
             .resizable()
             .clipShape(.circle)
             .scaledToFill()
-            .frame(width: 50  , height: 50)
+            .frame(width: 60  , height: 60)
        
     }
 }
