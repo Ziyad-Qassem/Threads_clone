@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @StateObject private var viewModel = ProfileViewModel()
     @State private var selectedFilter : ProfileThreadFilter = .threads
     @Namespace var animation
     private var filterBarWidth : CGFloat {
@@ -21,17 +22,19 @@ struct ProfileView: View {
                     HStack(alignment: .top) {
                         VStack(alignment: .leading , spacing: 12) {
                             VStack(alignment: .leading,spacing: 4) {
-                                Text("User Name")
+                                Text(viewModel.currentUser?.userName ?? "Nothing exists")
                                     .font(.title2)
                                     .fontWeight(.semibold)
                                 
-                                Text("Full User Name")
+                                Text(viewModel.currentUser?.fullName ?? "nothing exists")
                                     .font(.subheadline)
                                 
                             }
-                            
-                            Text("User Caption")
-                                .font(.footnote)
+                            if let bio = viewModel.currentUser?.bio {
+                                Text(bio)
+                                    .font(.footnote)
+                            }
+                          
                             
                             Text("100K Followers")
                                 .font(.caption)
@@ -88,6 +91,16 @@ struct ProfileView: View {
                 }.padding(.vertical , 8)
             }.padding(.horizontal)
             
+            }
+            .toolbar{
+                ToolbarItem(placement : .topBarTrailing ) {
+                    Button {
+                        viewModel.signOutUsers()
+                    } label: {
+                        Image(systemName: "line.3.horizontal")
+                    }
+
+                }
             }
         }
     }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TabBarView: View {
+struct ThreadsTabView: View {
     @State private var selectedTab: Int = 0
     @State private var showCreateThreadView : Bool = false
     var body: some View {
@@ -56,5 +56,5 @@ struct TabBarView: View {
 }
 
 #Preview {
-    TabBarView()
+    ThreadsTabView()
 }
