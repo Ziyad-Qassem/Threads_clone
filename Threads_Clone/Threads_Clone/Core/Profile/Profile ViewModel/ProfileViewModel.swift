@@ -24,7 +24,7 @@ class ProfileViewModel : ObservableObject {
         UserService.shared.$currentUser.sink { [weak self] user in
             self?.currentUser = user
             
-            print("user from  profile View Model from combine is \(user)")
+            print("DEBUG: user from  profile View Model from combine is \(String(describing: user))")
         }.store(in: &cancellables)
     }
     

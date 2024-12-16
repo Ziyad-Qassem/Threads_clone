@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct ExploreUsersCell: View {
+    let user : UserModel?
     var body: some View {
         
-            HStack(spacing : 8 ) {
+            HStack {
                 CircularUserImage()
                 VStack(alignment: .leading) {
-                    Text("User Name")
+                    Text(user?.userName ?? "no value")
                         .fontWeight(.semibold)
-                    Text("User Full Name")
+                    Text(user?.fullName ?? "no value")
                        
                 } .font(.footnote)
                 Spacer()
@@ -37,5 +38,5 @@ struct ExploreUsersCell: View {
 }
 
 #Preview {
-    ExploreUsersCell()
+    ExploreUsersCell(user: UserModel(id: NSUUID().uuidString, fullName: "full user name", emial: "user_email@gmail.com", password: "",userName: "user name" ))
 }

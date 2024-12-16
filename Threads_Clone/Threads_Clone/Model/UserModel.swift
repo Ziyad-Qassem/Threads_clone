@@ -6,7 +6,7 @@
 //
 
 import Foundation
-struct UserModel : Codable , Identifiable{
+struct UserModel : Codable , Identifiable ,Hashable{
     let id : String
     let fullName : String
     let emial : String
