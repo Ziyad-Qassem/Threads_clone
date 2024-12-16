@@ -20,17 +20,16 @@ struct ExploreView: View {
                                 ExploreUsersCell(user: user)
                                 Divider()
                             }.padding(.vertical , 4)
-                        }
                         
+                        }
                     }
                 }
-                navigationDestination(for: UserModel.self, destination: { user in
-                    ProfileView()
-                })
-                .navigationTitle("Search")
-                .searchable(text: $searchText, prompt: "Search")
             }
-
+            .navigationDestination(for: UserModel.self, destination: { user in
+                ProfileView()
+            })
+            .navigationTitle("Search")
+            .searchable(text: $searchText, prompt: "Search")
         }
     }
     
