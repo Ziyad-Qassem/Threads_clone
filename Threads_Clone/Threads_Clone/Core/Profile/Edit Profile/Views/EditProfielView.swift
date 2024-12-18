@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
-
+import PhotosUI
 struct EditProfielView: View {
     @State private var userBio : String = ""
     @State private var userLink : String = ""
     @State private var isPrivate : Bool = false
+    @Environment(\.dismiss) var dismiss
+    @StateObject var viewModel = EditCurrentUserProfileViewModel()
     var body: some View {
         NavigationStack{
             ZStack {
@@ -30,7 +32,18 @@ struct EditProfielView: View {
                             }
                             Spacer()
                             
-                            CircularUserImage()
+                            PhotosPicker(selection: $viewModel.selectedItem) {
+                                if let image = viewModel.profileImage {
+                                    image
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 40, height: 40)
+                                        .clipShape(.circle)
+                                        
+                                }else {
+                                    CircularUserImage()
+                                }
+                            }
                         }
                         Divider()
                         // section 2 bio label , actual user bio
@@ -70,7 +83,7 @@ struct EditProfielView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading){
                         Button {
-                            
+                           dismiss()
                         } label: {
                             Text("Cancle")
                                 .font(.subheadline)
@@ -82,7 +95,8 @@ struct EditProfielView: View {
                     
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
-                            
+                            Task {try await viewModel.uploadUserData()}
+                            dismiss()
                         } label: {
                             Text("Done")
                                 .font(.subheadline)

@@ -8,10 +8,12 @@
 import Foundation
 import FirebaseAuth
 import Combine
-class ProfileViewModel : ObservableObject {
+
+class CurrentUserProfileViewModel : ObservableObject {
 
     @Published var currentUser : UserModel?
     private var cancellables = Set<AnyCancellable>()
+   
     
     func signOutUsers()  {
         AuthManager.shared.signOut()
@@ -20,6 +22,7 @@ class ProfileViewModel : ObservableObject {
     init(){
         setupSubscripers()
     }
+   
     private func setupSubscripers(){
         UserService.shared.$currentUser.sink { [weak self] user in
             self?.currentUser = user
