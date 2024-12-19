@@ -24,7 +24,7 @@ struct ProfileView: View {
                         .background(.black)
                         .cornerRadius(8)
                 }
-                UserContentListView()
+                UserContentListView(user : user)
             }.padding(.horizontal)
         }
         .navigationBarTitleDisplayMode(.inline)

@@ -12,10 +12,9 @@ class FeedViewModel : ObservableObject {
     
     init (){
         Task {try await fetchThreads()}
-            
     }
     
-    private func fetchThreads() async throws{
+    func fetchThreads() async throws{
         self.threads = try await ThreadService.fetechAllThreads()
         try await fetchUserDataForThreads()
     }

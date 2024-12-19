@@ -14,6 +14,12 @@ struct UserContentListView: View {
         let count = CGFloat(ProfileThreadFilter.allCases.count)
         return UIScreen.main.bounds.width / count - 16
     }
+   
+    init(user:  UserModel ) {
+        self._viewModel = StateObject(wrappedValue: UserContentListViewModel(user: user))
+    }
+    
+    @StateObject private var viewModel : UserContentListViewModel
     var body: some View {
         VStack{
             HStack{
@@ -43,8 +49,8 @@ struct UserContentListView: View {
                 }
         }
             LazyVStack {
-                ForEach(0 ... 10 , id:\.self) { thread in
-  //                  ThreadCell(thread: nil)
+                ForEach(viewModel.threads) { thread in
+                ThreadCell(thread: thread)
                     
                 }
             }
@@ -53,5 +59,5 @@ struct UserContentListView: View {
 }
 
 #Preview {
-    UserContentListView()
+    UserContentListView(user : UserModel(id: "", fullName: " user full name", emial: "user email", password: "user password", userName: "userName"))
 }

@@ -15,6 +15,8 @@ struct ThreadModel : Codable , Identifiable {
     let caption : String
     let timestamp : Timestamp
     var likes : Int
+    
+    var didLike : Bool? = false
     var user : UserModel?
 }
 struct CommentModel : Codable , Identifiable {

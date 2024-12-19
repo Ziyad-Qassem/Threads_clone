@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FeedView: View {
     @StateObject  var viewModel = FeedViewModel()
-    @State private var reload = 0
+    
     
     var body: some View {
         NavigationStack{
@@ -19,14 +19,14 @@ struct FeedView: View {
                         ThreadCell(thread: thread)
                     }
                 }.refreshable {
-                    print("Not yet implemented")
+                    Task{try await viewModel.fetchThreads()}
                 }
             }.navigationTitle("Threads")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar{
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
-                            reload += 1
+                            Task{try await viewModel.fetchThreads()}
                         } label: {
                             Image(systemName: "arrow.counterclockwise")
                                 .foregroundStyle(.black)

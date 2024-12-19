@@ -10,6 +10,7 @@ import SwiftUI
 struct CurrentUserProfileView: View {
     @StateObject var viewModel = CurrentUserProfileViewModel()
     @State private var showEditProfileSheet = false
+    
     var body: some View {
         NavigationStack{
             ScrollView(showsIndicators: false) {
@@ -30,7 +31,9 @@ struct CurrentUserProfileView: View {
                                     .stroke( Color(.systemGray4  ), lineWidth: 1)
                             }
                 }
-                UserContentListView()
+                    if let user = viewModel.currentUser {
+                        UserContentListView(user: user)
+                    }
             }.padding(.horizontal)
             
             }
