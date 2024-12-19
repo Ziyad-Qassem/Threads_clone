@@ -44,11 +44,8 @@ class UserService  {
     @MainActor
     func updateUserProfileImage(withImageURL imageURL : String) async throws {
         guard let currenttUserId = Auth.auth().currentUser?.uid else {return }
-        do{ try await Firestore.firestore().collection("users").document(currenttUserId).updateData(["profileImage": imageURL])
+        try await Firestore.firestore().collection("users").document(currenttUserId).updateData(["profileImage": imageURL])
             self.currentUser?.profileImage = imageURL
-        }
-        catch{
-            print("[DEBUG]: Error updating user profile image in fetchUsersData in userService")
-        }
+        
     }
 }

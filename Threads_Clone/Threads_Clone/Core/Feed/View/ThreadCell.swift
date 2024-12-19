@@ -12,7 +12,7 @@ struct ThreadCell: View {
         VStack{
             HStack(alignment: .top, spacing: 12) {
                 
-                CircularUserImage()
+                CircularUserImage(user: nil)
                 VStack(alignment: .leading, spacing: 4){
                     HStack {
                         Text("User Name")

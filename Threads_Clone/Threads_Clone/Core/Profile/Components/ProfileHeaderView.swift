@@ -35,7 +35,7 @@ struct ProfileHeaderView: View {
                     .foregroundStyle(.gray)
             }
             Spacer()
-            CircularUserImage()
+            CircularUserImage(user : user)
             
         }
     }

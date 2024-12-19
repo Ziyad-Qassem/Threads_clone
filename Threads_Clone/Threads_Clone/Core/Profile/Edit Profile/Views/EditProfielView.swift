@@ -8,6 +8,7 @@
 import SwiftUI
 import PhotosUI
 struct EditProfielView: View {
+    let user : UserModel
     @State private var userBio : String = ""
     @State private var userLink : String = ""
     @State private var isPrivate : Bool = false
@@ -41,7 +42,7 @@ struct EditProfielView: View {
                                         .clipShape(.circle)
                                         
                                 }else {
-                                    CircularUserImage()
+                                    CircularUserImage(user: user)
                                 }
                             }
                         }
@@ -114,5 +115,5 @@ struct EditProfielView: View {
 }
 
 #Preview {
-    EditProfielView()
+    EditProfielView(user:  UserModel(id: NSUUID().uuidString, fullName: "full user name", emial: "user_email@gmail.com", password: "",userName: "user name" ))
 }
