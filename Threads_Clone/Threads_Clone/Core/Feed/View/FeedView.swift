@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct FeedView: View {
+    @StateObject  var viewModel = FeedViewModel()
+    @State private var reload = 0
+    
     var body: some View {
         NavigationStack{
             ScrollView(showsIndicators: false) {
                 LazyVStack{
-                    ForEach (0 ... 10 , id:\.self){ thread in
-                        ThreadCell()
+                    ForEach (viewModel.threads){ thread in
+                        ThreadCell(thread: thread)
                     }
                 }.refreshable {
                     print("Not yet implemented")
@@ -23,7 +26,7 @@ struct FeedView: View {
                 .toolbar{
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
-                            
+                            reload += 1
                         } label: {
                             Image(systemName: "arrow.counterclockwise")
                                 .foregroundStyle(.black)

@@ -6,21 +6,23 @@
 //
 
 import SwiftUI
+import FirebaseCore
 
 struct ThreadCell: View {
+    let thread : ThreadModel
     var body: some View {
         VStack{
             HStack(alignment: .top, spacing: 12) {
                 
-                CircularUserImage(user: nil)
+                CircularUserImage(user: thread.user)
                 VStack(alignment: .leading, spacing: 4){
                     HStack {
-                        Text("User Name")
+                        Text(thread.user?.userName ?? "user Name not found")
                             .font(.footnote)
                             .fontWeight(.semibold)
                         Spacer()
                         
-                        Text("10m")
+                        Text(convertFirebaseTimestampToDateString(timestamp: thread.timestamp))
                             .font(.caption)
                             .foregroundStyle(Color(.systemGray3))
                         Button {
@@ -30,7 +32,7 @@ struct ThreadCell: View {
                                 .foregroundStyle(Color(.darkGray))
                         }
                     }
-                        Text("user Content")
+                    Text(thread.caption)
                         .font(.footnote)
                         .multilineTextAlignment(.leading)
                     
@@ -39,6 +41,10 @@ struct ThreadCell: View {
                             
                         } label: {
                             Image(systemName: "heart")
+                            if thread.likes > 0 {
+                                Text("\(thread.likes)")
+                                    .font(.footnote)
+                            }
                         }
                         Button {
                             
@@ -65,8 +71,22 @@ struct ThreadCell: View {
         }.padding()
         }
     }
-
+func convertFirebaseTimestampToDateString(timestamp: Timestamp) -> String {
+ 
+    let date = timestamp.dateValue()
+    
+    // Create a DateFormatter
+    let formatter = DateFormatter()
+//    formatter.dateStyle = .medium
+//    formatter.timeStyle = .short
+//    formatter.locale = Locale.current
+    formatter.dateFormat = "MMMM dd, HH:mm"
+    
+    // Convert Date to String
+    let dateString = formatter.string(from: date)
+    return dateString
+}
 
 #Preview {
-    ThreadCell()
+    ThreadCell(thread: ThreadModel(threadOwerUid: "", caption: "this is a temp caption", timestamp: Timestamp(), likes: 100))
 }

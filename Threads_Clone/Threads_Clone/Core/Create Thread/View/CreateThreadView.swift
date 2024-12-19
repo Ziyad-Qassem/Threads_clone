@@ -8,22 +8,24 @@
 import SwiftUI
 
 struct CreateThreadView: View {
-    @State private var newThread: String = ""
+    @StateObject private var viewModel = CreatThreadViewModel()
     @Environment(\.dismiss) var dismiss
+    
+    
     var body: some View {
         NavigationStack{
             VStack {
                 HStack{
-                    CircularUserImage(user: nil)
+                    CircularUserImage(user: viewModel.user)
                     VStack(alignment: .leading, spacing: 5) {
-                        Text("User Name")
+                        Text(viewModel.user?.userName ?? "No User Name")
                             .fontWeight(.semibold )
-                        TextField("Start a thread" , text: $newThread, axis:.vertical)
+                        TextField("Start a thread" , text: $viewModel.threadCaption, axis:.vertical)
                     }.font(.footnote)
                     Spacer()
-                    if !newThread.isEmpty{
+                    if !viewModel.threadCaption.isEmpty{
                         Button {
-                            newThread = ""
+                            viewModel.threadCaption = ""
                         } label: {
                             Image(systemName: "xmark")
                                 .resizable()
@@ -51,14 +53,18 @@ struct CreateThreadView: View {
                 }
                 ToolbarItem (placement: .topBarTrailing){
                     Button {
+                        Task {
+                            try await viewModel.uploadThread()
+                            dismiss()
+                        }
                         
                     } label: {
                         Text("Post")
                             .font(.subheadline)
                             .foregroundStyle(.black)
                             .fontWeight(.semibold)
-                            .opacity(newThread.isEmpty ? 0.5 : 1.0)
-                            .disabled(newThread.isEmpty)
+                            .opacity(viewModel.threadCaption.isEmpty ? 0.5 : 1.0)
+                            .disabled(viewModel.threadCaption.isEmpty)
                     }
 
                 }
