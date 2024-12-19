@@ -6,21 +6,23 @@
 //
 
 import SwiftUI
+import FirebaseCore
 
 struct ThreadCell: View {
+    let thread : ThreadModel
     var body: some View {
         VStack{
             HStack(alignment: .top, spacing: 12) {
                 
-                CircularUserImage(user: nil)
+                CircularUserImage(user: thread.user)
                 VStack(alignment: .leading, spacing: 4){
                     HStack {
-                        Text("User Name")
+                        Text(thread.user?.userName ?? "user Name not found")
                             .font(.footnote)
                             .fontWeight(.semibold)
                         Spacer()
                         
-                        Text("10m")
+                        Text(thread.timestamp.timestampToString())
                             .font(.caption)
                             .foregroundStyle(Color(.systemGray3))
                         Button {
@@ -30,34 +32,11 @@ struct ThreadCell: View {
                                 .foregroundStyle(Color(.darkGray))
                         }
                     }
-                        Text("user Content")
+                    Text(thread.caption)
                         .font(.footnote)
                         .multilineTextAlignment(.leading)
-                    
-                    HStack(spacing: 16) {
-                        Button {
-                            
-                        } label: {
-                            Image(systemName: "heart")
-                        }
-                        Button {
-                            
-                        } label: {
-                            Image(systemName: "bubble.right")
-                        }
-                        
-                        Button {
-                            
-                        } label: {
-                            Image(systemName: "arrow.rectanglepath")
-                        }
-                        
-                        Button {
-                            
-                        } label: {
-                            Image(systemName: "paperplane")
-                        }
-                    }.padding(.vertical , 8)
+                    ContentActionButtonView(thread: thread)
+                        .padding(.vertical , 8)
                         .foregroundStyle(.black)
                     }
                 }
@@ -66,7 +45,6 @@ struct ThreadCell: View {
         }
     }
 
-
 #Preview {
-    ThreadCell()
+    ThreadCell(thread: ThreadModel(threadOwerUid: "", caption: "this is a temp caption", timestamp: Timestamp(), likes: 100))
 }

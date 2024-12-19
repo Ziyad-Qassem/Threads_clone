@@ -8,22 +8,25 @@
 import SwiftUI
 
 struct FeedView: View {
+    @StateObject  var viewModel = FeedViewModel()
+    
+    
     var body: some View {
         NavigationStack{
             ScrollView(showsIndicators: false) {
                 LazyVStack{
-                    ForEach (0 ... 10 , id:\.self){ thread in
-                        ThreadCell()
+                    ForEach (viewModel.threads){ thread in
+                        ThreadCell(thread: thread)
                     }
                 }.refreshable {
-                    print("Not yet implemented")
+                    Task{try await viewModel.fetchThreads()}
                 }
             }.navigationTitle("Threads")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar{
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
-                            
+                            Task{try await viewModel.fetchThreads()}
                         } label: {
                             Image(systemName: "arrow.counterclockwise")
                                 .foregroundStyle(.black)
