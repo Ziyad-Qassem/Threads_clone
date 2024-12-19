@@ -12,7 +12,7 @@ struct ExploreUsersCell: View {
     var body: some View {
         
             HStack {
-                CircularUserImage()
+                CircularUserImage(user: user)
                 VStack(alignment: .leading) {
                     Text(user?.userName ?? "no value")
                         .fontWeight(.semibold)

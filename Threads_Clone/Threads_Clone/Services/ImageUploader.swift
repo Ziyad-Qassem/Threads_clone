@@ -30,8 +30,8 @@ struct ImageUploader {
                     return
                 }
                 
-                if let response = response, let url = response.url {
-                    
+                if let response = response, let url = response.secureUrl {
+                    print("\(url)")
                     continuation.resume(returning: url) // Resume with the URL
                 } else {
                     

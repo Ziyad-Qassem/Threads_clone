@@ -14,7 +14,7 @@ struct CreateThreadView: View {
         NavigationStack{
             VStack {
                 HStack{
-                    CircularUserImage()
+                    CircularUserImage(user: nil)
                     VStack(alignment: .leading, spacing: 5) {
                         Text("User Name")
                             .fontWeight(.semibold )

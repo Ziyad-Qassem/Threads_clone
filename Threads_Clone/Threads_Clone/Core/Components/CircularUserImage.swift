@@ -6,19 +6,30 @@
 //
 
 import SwiftUI
-
+import Kingfisher
 struct CircularUserImage: View {
-    
+    var user : UserModel?
+    init (user : UserModel?){
+        self.user = user
+    }
     var body: some View {
-        Image("profile-picture")
-            .resizable()
-            .clipShape(.circle)
-            .scaledToFill()
-            .frame(width: 60  , height: 60)
-       
+        if let imageUrl = user?.profileImage {
+            KFImage(URL(string: imageUrl))
+                .resizable()
+                .clipShape(.circle)
+                .scaledToFill()
+                .frame(width: 60, height: 60)
+           
+        }
+        else {
+            Image(systemName: "person.circle.fill")
+                .resizable()
+                .frame(width: 60  , height: 60)
+                .foregroundStyle(Color(.systemGray))
+        }
     }
 }
 
 #Preview {
-    CircularUserImage()
+    CircularUserImage(user:  UserModel(id: NSUUID().uuidString, fullName: "full user name", emial: "user_email@gmail.com", password: "",userName: "user name" ))
 }
