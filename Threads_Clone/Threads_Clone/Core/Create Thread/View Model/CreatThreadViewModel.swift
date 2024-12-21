@@ -20,7 +20,7 @@ class CreatThreadViewModel: ObservableObject {
       
         guard  let userId = Auth.auth().currentUser?.uid else{return nil }
         
-        let thread = ThreadModel(threadOwerUid: userId, caption: threadCaption, timestamp: Timestamp(), likes: 0)
+        let thread = ThreadModel(threadOwerUid: userId, caption: threadCaption, timestamp: Timestamp(), likes: 0, replyCount: 0)
         
         return thread
     }

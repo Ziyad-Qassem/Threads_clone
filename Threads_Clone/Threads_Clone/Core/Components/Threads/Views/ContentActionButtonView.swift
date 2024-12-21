@@ -9,12 +9,15 @@ import SwiftUI
 
 struct ContentActionButtonView: View {
     @StateObject var viewModel : ContentActionViewModel
-    private var thread : ThreadModel {
-        return viewModel.thread
-    }
+    @State private var showReplySheet : Bool = false
+    private var thread : ThreadModel
+        
+    
     init(thread : ThreadModel){
         
         self._viewModel = StateObject(wrappedValue: ContentActionViewModel(thread: thread))
+        
+        self.thread = thread
     }
     private var threadLiked : Bool {
         return viewModel.thread.didLike ?? false
@@ -42,7 +45,7 @@ struct ContentActionButtonView: View {
                         .foregroundStyle(threadLiked ? .red : .black)
                 }
                 Button {
-                    
+                    showReplySheet.toggle()
                 } label: {
                     Image(systemName: "bubble.right")
                 }
@@ -59,12 +62,29 @@ struct ContentActionButtonView: View {
                     Image(systemName: "paperplane")
                 }
             }
-            if thread.likes > 0 {
-                Text("\(thread.likes) likes")
-                    .font(.caption)
-                    .foregroundStyle(.gray)
-                    .padding(.vertical , 4)
-            }
+            HStack {
+                if thread.replyCount > 0 {
+                    Text("\(thread.replyCount) replies")
+                    
+                }
+                
+                if thread.replyCount > 0 && thread.likes > 0 {
+                    Text("-")
+                }
+                
+                if thread.likes > 0 {
+                    Text("\(thread.likes) likes")
+                    
+                }
+               
+               
+            }    .font(.caption)
+                .foregroundStyle(.gray)
+                .padding(.vertical , 4)
+        }
+        .sheet(isPresented: $showReplySheet) {
+            
+            ThreadReplyView(thread: thread)
         }
     }
 }
