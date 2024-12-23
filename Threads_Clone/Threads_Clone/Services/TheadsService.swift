@@ -31,6 +31,16 @@ struct  ThreadService  {
         return threads.sorted(by: {$0.timestamp.dateValue() > $1.timestamp.dateValue()})
     }
     
+    static func fetchThreadById(By threadId : String) async throws -> ThreadModel {
+      
+        let snapshot = try await FireStoreConstants.ThreadCollection.document(threadId).getDocument()
+        
+        let thread = try snapshot.data(as: ThreadModel.self)
+        
+            return thread
+        
+    }
+    
 }
 //MARK: Likes section
 extension ThreadService {
