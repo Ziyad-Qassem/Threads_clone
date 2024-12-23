@@ -12,6 +12,8 @@ struct SignUpView: View {
     @State private var password: String = ""
     @State private var fullName: String = ""
     @State private var email: String = ""
+    @StateObject var viewModel = RegistrationViewModel()
+    @Environment(\.dismiss) var  dismiss
     var body: some View {
         NavigationStack{
             VStack{
@@ -20,24 +22,28 @@ struct SignUpView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 150 , height: 150)
+                    .padding(.bottom)
+        
                 VStack{
-                    TextField("Enter your email", text: $email)
+                    TextField("Enter your email", text: $viewModel.email)
                         .modifier(TextFieldModifiers())
                         .autocapitalization(.none)
                         
-                    SecureField("Enter your password" , text : $password)
+                    SecureField("Enter your password" , text : $viewModel.password)
                         .modifier(TextFieldModifiers())
                     
-                    TextField("Enter your full name" , text: $fullName)
+                    TextField("Enter your full name" , text: $viewModel.fullName)
                         .modifier(TextFieldModifiers())
                     
-                    TextField("Enter your username" , text: $username)
+                    TextField("Enter your username" , text: $viewModel.userName)
                         .modifier(TextFieldModifiers())
+                        .autocapitalization(.none)
                     
                 }
 
                 Button {
-                    
+                    Task{ try await  viewModel.createuser()
+                        }
                 } label: {
                     Text("Sign Up")
                         .modifier(ButtonModifiers())
@@ -48,7 +54,7 @@ struct SignUpView: View {
                 Divider()
                 
                 Button {
-                    
+                    dismiss()
                 }  label: {
                     HStack(spacing: 3){
                         Text("Already have an acount?")
