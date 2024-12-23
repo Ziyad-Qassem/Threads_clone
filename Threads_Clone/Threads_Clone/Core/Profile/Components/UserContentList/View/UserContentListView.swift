@@ -49,12 +49,21 @@ struct UserContentListView: View {
                 }
         }
             LazyVStack {
-                ForEach(viewModel.threads) { thread in
-                ThreadCell(thread: thread)
-                    
+                if selectedFilter == .threads {
+                    ForEach(viewModel.threads) { thread in
+                    ThreadCell(thread: thread)
+                            .transition(.move(edge: .leading))
+                    }
+                }else {
+                    ForEach(viewModel.threadReplies) { reply in
+                        ThreadReplyProfileCell(reply: reply)
+                            .transition(.move(edge: .trailing))
+                    }
                 }
+                
             }
         }.padding(.vertical , 8)
+            
     }
 }
 

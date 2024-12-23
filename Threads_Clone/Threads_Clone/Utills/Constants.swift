@@ -10,7 +10,9 @@ import Firebase
 struct MockData {
     static let userMockData = UserModel(id: NSUUID().uuidString, fullName: "full user name", emial: "user_email@gmail.com", password: "",userName: "user name" )
     
-    static let threadMockData = ThreadModel(threadOwerUid: "", caption: "this is a temp caption", timestamp: Timestamp(), likes: 100)
+    static let threadMockData = ThreadModel(threadOwerUid: "", caption: "this is a temp caption", timestamp: Timestamp(), likes: 100, replyCount: 80)
+    
+    static let threadReplyMocKData = ThreadReplyModel(threadId: "", replyOwnerId: " ", replyText: "this is just reply mock data" , threadOwnerId: "", timestamp: Timestamp())
     
 }
 struct FireStoreConstants {

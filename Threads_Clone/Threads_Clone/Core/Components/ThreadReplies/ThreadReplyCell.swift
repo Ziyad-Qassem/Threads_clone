@@ -1,28 +1,30 @@
 //
-//  ThreadCell.swift
+//  ThreadReplyCell.swift
 //  Threads_Clone
 //
-//  Created by Ziyad Qassem on 14/12/2024.
+//  Created by Ziyad Qassem on 21/12/2024.
 //
 
 import SwiftUI
-import FirebaseCore
 
-struct ThreadCell: View {
-    let thread : ThreadModel
+struct ThreadReplyCell: View {
+    let reply : ThreadReplyModel
+    init(reply : ThreadReplyModel){
+        self.reply = reply
+    }
     var body: some View {
         VStack{
             HStack(alignment: .top, spacing: 12) {
                 
-                CircularUserImage(user: thread.user)
+                CircularUserImage(user: reply.replyUser)
                 VStack(alignment: .leading, spacing: 4){
                     HStack {
-                        Text(thread.user?.userName ?? "user Name not found")
+                        Text(reply.replyUser?.userName ?? "user Name not found")
                             .font(.footnote)
                             .fontWeight(.semibold)
                         Spacer()
                         
-                        Text(thread.timestamp.timestampToString())
+                        Text(reply.timestamp.timestampToString())
                             .font(.caption)
                             .foregroundStyle(Color(.systemGray3))
                         Button {
@@ -32,19 +34,17 @@ struct ThreadCell: View {
                                 .foregroundStyle(Color(.darkGray))
                         }
                     }
-                    Text(thread.caption)
+                    Text(reply.replyText)
                         .font(.footnote)
                         .multilineTextAlignment(.leading)
-                    ContentActionButtonView(thread: thread)
-                        .padding(.vertical , 8)
-                        .foregroundStyle(.black)
-                    }
                 }
-            Divider()
-        }.padding()
+                Divider()
+            }.padding()
         }
     }
+}
+    
 
 #Preview {
-    ThreadCell(thread: MockData.threadMockData)
+    ThreadReplyCell(reply: MockData.threadReplyMocKData)
 }
